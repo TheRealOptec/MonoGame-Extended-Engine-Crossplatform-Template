@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base
 {
+    /**
+     * <summary>
+     *  Defines the operations that all <see cref="GameObject"/> utilise. 
+     * </summary>
+     */
     public interface IGameObject
     {
     }
