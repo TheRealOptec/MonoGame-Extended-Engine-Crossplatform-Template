@@ -11,22 +11,37 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
      *  Class <see cref="LoudSafePointer{T}"/> maintain the memory safety by setting their internal pointer value to null when it needs deallocating
      *  However, any functions involving its internal value will not do any null checks and thus will fail loudly
      * </summary>
+     * <seealso cref="IPointerReference"/>
      * <seealso cref="IPointer{T}"/>
      */
-    public readonly struct LoudSafePointer<T> : IPointer<T>
-        where T : class
+    public struct LoudSafePointer<T> : IPointer<T>
+        where T : class, IPointerReference
     {
-        private readonly T val;
+        private T val;
+
         public LoudSafePointer(T val) {
             this.val = val;
         }
-        
+
         /**
          * <inheritdoc/>
          * <exception cref="NullReferenceException">
          *  Thrown when the pointer's object has been deallocated and the provided function attempts to make use of it. 
          * </exception>
          */
-        public R Apply<R>(Func<T, R> fn) => fn(val);
+        public readonly R Apply<R>(Func<T, R> fn) => fn(val);
+
+        public readonly void Apply(Action<T> fn) => fn(val);
+
+        /**
+         * <remarks>
+         *  Sets internal reference value to null
+         * </remarks>
+         * <inheritdoc/>
+         */
+        public void OnDeallocate()
+        {
+            val = null;
+        }
     }
 }

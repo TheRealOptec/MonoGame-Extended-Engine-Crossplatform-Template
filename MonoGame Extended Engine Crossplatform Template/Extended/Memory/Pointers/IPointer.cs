@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Allocation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,10 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
      * <summary>
      *  The interface <see cref="IPointer{T}"/> is used to define the common operations among all the special pointer types. 
      * </summary>
+     * <seealso cref="IPointerReference"/>
      * <seealso cref="LoudSafePointer{T}"/>
      */
-    public interface IPointer<T> where T : class
+    public interface IPointer<T> : IDeallocateable where T : class, IPointerReference
     {
         /**
          * <summary>
@@ -24,5 +26,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
          * </returns>
          */
         public R Apply<R>(Func<T, R> fn);
+        public void Apply(Action<T> fn);
+
     }
 }
