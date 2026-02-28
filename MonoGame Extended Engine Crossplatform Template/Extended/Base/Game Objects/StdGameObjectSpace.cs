@@ -17,6 +17,9 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
         // This is the standard structure since it is expected that game object's will mostly be filtered by their tag
         private readonly Dictionary<TagRegistry, SkipList<GameObject>> spaceObjs = new();
 
+        // The standard size of each skiplist's nodes
+        private const int STD_SKIP_SIZE = 64;
+
         public IPointer<GameObject> CreateObject(params Action<GameObject>[] genFns)
         {
             // Create a new game object
@@ -27,7 +30,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             foreach (var tag in newObj.GetTags()) {
                 spaceObjs.TryGetValue(tag, out SkipList<GameObject> tagObjList);
                 if (tagObjList == null) {
-                    tagObjList = new SkipList<GameObject>();
+                    tagObjList = new SkipList<GameObject>(STD_SKIP_SIZE);
                     spaceObjs[tag] = tagObjList;
                 }
                 spaceObjs[tag].Add(newObj);
