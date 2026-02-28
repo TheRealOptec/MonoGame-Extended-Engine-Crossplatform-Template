@@ -14,6 +14,6 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Filtering
          *  the provided filter functions
          * </summary>
          */
-        public R Filter(T structure);
+        public R[] Filter(T structure);
     }
 }

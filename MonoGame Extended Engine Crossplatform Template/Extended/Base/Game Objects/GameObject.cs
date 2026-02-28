@@ -1,4 +1,5 @@
-﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointers;
+﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,11 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
         public void RemovePointer<T>(IPointer<T> p) where T : class, IPointerReference
         {
             pointerReference.RemovePointer<T>(p);
+        }
+
+        public TagRegistry[] GetTags()
+        {
+            throw new NotImplementedException();
         }
     }
 }

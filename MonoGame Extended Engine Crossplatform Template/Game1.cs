@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Config;
+using System;
 
 namespace MonoGame_Extended_Engine_Crossplatform_Template
 {
@@ -14,6 +16,9 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            
+            IsFixedTimeStep = ConfigSettings.CAPPED_FRAME_RATE;
+            if(ConfigSettings.CAPPED_FRAME_RATE) TargetElapsedTime = TimeSpan.FromSeconds(1d / ConfigSettings.MAX_FPS);
         }
 
         protected override void Initialize()

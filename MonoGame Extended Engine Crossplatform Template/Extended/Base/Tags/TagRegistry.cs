@@ -14,7 +14,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags
      *  This is an enum representation in order to prevent typo based errors (which could be difficult to catch). 
      * </remarks>
      */
-    public enum Tags
+    public enum TagRegistry
     {
         
     }
