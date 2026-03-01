@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
 {
-    public struct FixedArrayList<T> : IList<T>
+    // Could be a struct but would have to change many implementations so this shall remain a class for now
+    public class FixedArrayList<T> : IList<T>
     {
         // The internal array structure
         private T[] arr;
@@ -23,15 +24,15 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
                 if (index > this.appendIx) throw new IndexOutOfRangeException();
                 return arr[index];
             }
-            readonly set {
+            set {
                 if (index > this.appendIx) throw new IndexOutOfRangeException();
                 arr[index] = value;
             }
         }
 
-        public readonly int Count => this.appendIx;
+        public int Count => this.appendIx;
 
-        public readonly bool IsReadOnly => arr.IsReadOnly;
+        public bool IsReadOnly => arr.IsReadOnly;
 
         public void Add(T item)
         {
@@ -45,7 +46,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
             this.arr = new T[this.arr.Length];
         }
 
-        public readonly bool Contains(T item)
+        public bool Contains(T item)
         {
             // This has be done manually instead of by using this.arr.Contains to avoid checking elements with meaningless values (i.e. elements after the appendIx)
             for (int i = 0; i < this.appendIx; i++) {
@@ -54,7 +55,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
             return false;
         }
 
-        public readonly void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             // Again, this has been done manually to prevent copying meaningless values
             for (int i = 0; i < this.appendIx; i++) {
@@ -64,15 +65,14 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
 
         public IEnumerator<T> GetEnumerator()
         {
-            // TODO - learn about IEnumerators and implement this
-            throw new NotImplementedException();
+            return new FixedArrayListEnumerator<T>(this);
         }
 
         /**
          * <inheritdoc/>
          * <remarks>Will return the index of the first instance. </remarks>
          */
-        public readonly int IndexOf(T item)
+        public int IndexOf(T item)
         {
             for (int i = 0; i < this.appendIx; i++) {
                 if (this.arr[i].Equals(item)) return i;
@@ -102,7 +102,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
          * <remarks>Assumes that there is overflow - so make sure to check that there will be overflow before running this. </remarks>
          * <returns>The element which has been deleted due to the overflow. </returns>
          */
-        public readonly T OverflowInsert(int index, T item) {
+        public T OverflowInsert(int index, T item) {
             T overflowElem = this.arr[^1];
             for (int i = this.arr.Length - 1; i > index; i++) {
                 this.arr[i] = this.arr[i - 1];
@@ -141,8 +141,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            // TODO - learn about IEnumerators and implement this
-            throw new NotImplementedException();
+            return this.GetEnumerator();
         }
 
         /**
@@ -153,7 +152,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
          *  True if there is space remaining (i.e. element can be added or inserted) and false if not. 
          * </returns>
          */
-        public readonly bool IsSpaceRemaining() => this.appendIx < this.arr.Length;
+        public bool IsSpaceRemaining() => this.appendIx < this.arr.Length;
 
         /**
          * <summary>

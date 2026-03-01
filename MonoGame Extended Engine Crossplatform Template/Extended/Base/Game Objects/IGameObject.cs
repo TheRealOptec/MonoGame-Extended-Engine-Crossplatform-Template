@@ -24,5 +24,12 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base
          * <seealso cref="TagRegistry"/>
          */
         public TagRegistry[] GetTags();
+
+        /**
+         * <summary>
+         *  Adds the specified tags to this game object
+         * </summary>
+         */
+        public void AddTags(params TagRegistry[] tags);
     }
 }

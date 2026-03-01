@@ -18,6 +18,9 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
 
         private readonly IPointerReference pointerReference = new PointerReferenceBase();
 
+        // The tags associated with this game object
+        private readonly ISet<TagRegistry> tags = new HashSet<TagRegistry>();
+
         public void OnDeallocate()
         {
             pointerReference.OnDeallocate();
@@ -33,9 +36,12 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             pointerReference.RemovePointer<T>(p);
         }
 
-        public TagRegistry[] GetTags()
-        {
-            throw new NotImplementedException();
+        public TagRegistry[] GetTags() => tags.ToArray();
+
+        public void AddTags(params TagRegistry[] tags) {
+            foreach (var t in tags) {
+                this.tags.Add(t);
+            }
         }
     }
 }

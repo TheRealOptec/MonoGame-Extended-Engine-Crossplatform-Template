@@ -16,6 +16,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags
      */
     public enum TagRegistry
     {
-        
+        TEST_1,
+        TEST_2,
     }
 }

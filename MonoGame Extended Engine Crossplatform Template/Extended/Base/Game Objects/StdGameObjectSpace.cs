@@ -30,8 +30,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             foreach (var tag in newObj.GetTags()) {
                 spaceObjs.TryGetValue(tag, out SkipList<GameObject> tagObjList);
                 if (tagObjList == null) {
-                    tagObjList = new SkipList<GameObject>(STD_SKIP_SIZE);
-                    spaceObjs[tag] = tagObjList;
+                    spaceObjs[tag] = new SkipList<GameObject>(STD_SKIP_SIZE);
                 }
                 spaceObjs[tag].Add(newObj);
             }

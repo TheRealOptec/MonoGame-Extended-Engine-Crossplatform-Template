@@ -22,6 +22,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
 
         public SkipList(int maxSize) {
             this.maxSize = maxSize;
+            this.linkedList.AddLast(new FixedArrayList<T>(maxSize));
         }
 
         public T this[int index] {
@@ -76,6 +77,8 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
         public void Clear()
         {
             this.linkedList.Clear();
+            // Not a true clear
+            this.linkedList.AddLast(new FixedArrayList<T>(maxSize));
         }
 
         public bool Contains(T item)
@@ -96,11 +99,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            // TODO - learn about IEnumerators and implement this
-            throw new NotImplementedException();
-        }
+        public IEnumerator<T> GetEnumerator() => new SkipListEnumerator<T>(this);
 
         /**
          * <inheritdoc/>
@@ -180,10 +179,14 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Structures
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            // TODO - learn about IEnumerators and implement this
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        /**
+         * <summary>
+         *  Gets the first <see cref="LinkedListNode{S}"/>
+         * </summary>
+         * <returns>The first node of the internal <see cref="LinkedList{S}"/></returns>
+         */
+        public LinkedListNode<FixedArrayList<T>> GetFirstNode() => this.linkedList.First;
     }
 }
