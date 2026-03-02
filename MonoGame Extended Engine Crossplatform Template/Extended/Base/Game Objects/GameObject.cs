@@ -26,7 +26,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
         private readonly ISet<TagRegistry> tags = new HashSet<TagRegistry>();
 
         // The object space where the components of this game object are stored
-        private readonly StdObjectComponentSpace compSpace;
+        private readonly StdObjectComponentSpace compSpace = new();
 
         public void OnDeallocate()
         {
@@ -51,14 +51,8 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             }
         }
 
-        public IPointer<IObjectComponent>[] GetComponents(IFilter<Dictionary<Type, IObjectComponent>, IObjectComponent> filter)
-        {
-            throw new NotImplementedException();
-        }
+        public IPointer<IObjectComponent>[] GetComponents(IFilter<Dictionary<Type, IObjectComponent>, IObjectComponent> filter) => compSpace.GetObject(filter);
 
-        public IPointer<C> CreateComponent<C>(params Action<C>[] genFns) where C : class, IObjectComponent
-        {
-            throw new NotImplementedException();
-        }
+        public IPointer<C> CreateComponent<C>(params Action<C>[] genFns) where C : class, IObjectComponent => compSpace.CreateObjectOfType<C>(genFns);
     }
 }
