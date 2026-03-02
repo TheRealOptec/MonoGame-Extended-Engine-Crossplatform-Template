@@ -20,7 +20,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
             {
                 pointer.Apply(x => { });
                 Assert.Fail();
-            } catch (NullReferenceException e) { }
+            } catch (NullReferenceException) { }
         }
     }
 }

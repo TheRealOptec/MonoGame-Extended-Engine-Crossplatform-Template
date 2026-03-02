@@ -1,4 +1,5 @@
-﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Spaces;
+﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Components;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Spaces;
 using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags;
 using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Filtering;
 using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointers;
@@ -39,9 +40,20 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             return new LoudSafePointer<GameObject>(newObj);
         }
 
-        public GameObject[] GetObject(IFilter<Dictionary<TagRegistry, SkipList<GameObject>>, GameObject> filter)
+        // Explicit implementation used here since compiler whines if I don't
+        IPointer<A> IObjectSpace<GameObject, Dictionary<TagRegistry, SkipList<GameObject>>>.CreateObjectOfType<A>(params Action<A>[] genFns)
         {
-            return filter.Filter(spaceObjs);
+            // Current there is only type of game object (GameObject) and thus right not this method has no specific purpose
+            throw new NotImplementedException();
         }
+
+        public IPointer<GameObject>[] GetObject(IFilter<Dictionary<TagRegistry, SkipList<GameObject>>, GameObject> filter)
+        {
+            GameObject[] filterResults = filter.Filter(spaceObjs);
+            return LoudSafePointer<GameObject>.EncapsulateAll(filterResults);
+        }
+
+        // Requires overwriting for some reason
+        public static Type GetStructureType() => typeof(Dictionary<TagRegistry, SkipList<GameObject>>);
     }
 }

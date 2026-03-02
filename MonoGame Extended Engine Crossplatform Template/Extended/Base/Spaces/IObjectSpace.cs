@@ -29,7 +29,7 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Spaces
          *  An array of <typeparamref name="T"/> matching the specified filter conditions.
          * </returns>
          */
-        public T[] GetObject(IFilter<S, T> filter);
+        public IPointer<T>[] GetObject(IFilter<S, T> filter);
 
         /**
          * <summary>
@@ -37,9 +37,33 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Spaces
          * </summary>
          * <param name="genFns">Functions to apply on this object as it is created</param>
          * <returns>
-         *  A special pointer to the this newly created object (see <see cref="IPointer{T}"/>)
+         *  A special pointer to the newly created object (see <see cref="IPointer{T}"/>)
          * </returns>
          */
         public IPointer<T> CreateObject(params Action<T>[] genFns);
+
+        /**
+         * <summary>
+         *  Creates an object within this object space of a specific type.
+         * </summary>
+         * <param name="genFns">Function to apply to this newly created object when it is created. </param>
+         * <returns>
+         *  A special pointer to the newly created object (see <see cref="IPointer{T}"/>)
+         * </returns>
+         * <remarks>
+         *  The type <typeparamref name="A"/> must derive from the type <typeparamref name="T"/>
+         * </remarks>
+         */
+        public IPointer<A> CreateObjectOfType<A>(params Action<A>[] genFns) where A : class, T;
+
+        /**
+         * <summary>
+         *  Gets the <see cref="Type"/> (type <typeparamref name="S"/>) of the internal structure for this <see cref="IObjectSpace{T, S}"/>
+         * </summary>
+         * <returns>
+         *  The <see cref="Type"/> of <typeparamref name="S"/>
+         * </returns>
+         */
+        public static Type GetStructureType() => typeof(S);
     }
 }

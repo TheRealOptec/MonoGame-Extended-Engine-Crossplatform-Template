@@ -43,5 +43,15 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
         {
             val = null;
         }
+
+        public static IPointer<T> Encapsulate(T val) => new LoudSafePointer<T>(val);
+
+        // Redefined since not compiling without this redefinition
+        public static IPointer<T>[] EncapsulateAll(params T[] vals)
+        {
+            IPointer<T>[] ret = new IPointer<T>[vals.Length];
+            for (int i = 0; i < ret.Length; i++) ret[i] = Encapsulate(vals[i]);
+            return ret;
+        }
     }
 }

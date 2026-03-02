@@ -28,5 +28,29 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointe
         public R Apply<R>(Func<T, R> fn);
         public void Apply(Action<T> fn);
 
+        /**
+         * <summary>
+         *  Creates a new instance of this pointer type that point to the provided value. 
+         * </summary>
+         * <returns>
+         *  An <see cref="IPointer{T}"/> which points to <paramref name="val"/> of type <typeparamref name="T"/>
+         * </returns>
+         */
+        public static IPointer<T> Encapsulate(T val) => throw new NotImplementedException();
+
+        /**
+         * <summary>
+         *  Creates an arrat of new instances of this pointer type that point to the provided values. 
+         * </summary>
+         * <returns>
+         *  An array of <see cref="IPointer{T}"/> which points to the <paramref name="vals"/> of type <typeparamref name="T"/>
+         * </returns>
+         */
+        public static IPointer<T>[] EncapsulateAll(params T[] vals) {
+            IPointer<T>[] ret = new IPointer<T>[vals.Length];
+            for (int i = 0; i < ret.Length; i++) ret[i] = Encapsulate(vals[i]);
+            return ret;
+        }
+
     }
 }

@@ -1,4 +1,8 @@
-﻿using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags;
+﻿using Microsoft.Xna.Framework;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Components;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Spaces;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Tags;
+using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Filtering;
 using MonoGame_Extended_Engine_Crossplatform_Template.Extended.Memory.Pointers;
 using System;
 using System.Collections.Generic;
@@ -13,13 +17,16 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
      *  The base unit for everything within this engine.
      * </summary>
      */
-    public class GameObject : IGameObject, IPointerReference
+    public class GameObject : IGameObject, IPointerReference, IObjectComponentable<Dictionary<Type, IObjectComponent>>
     {
-
+        // The internal pointer reference strategy which controls the allocation of pointers to this object
         private readonly IPointerReference pointerReference = new PointerReferenceBase();
 
         // The tags associated with this game object
         private readonly ISet<TagRegistry> tags = new HashSet<TagRegistry>();
+
+        // The object space where the components of this game object are stored
+        private readonly StdObjectComponentSpace compSpace;
 
         public void OnDeallocate()
         {
@@ -42,6 +49,16 @@ namespace MonoGame_Extended_Engine_Crossplatform_Template.Extended.Base.Game_Obj
             foreach (var t in tags) {
                 this.tags.Add(t);
             }
+        }
+
+        public IPointer<IObjectComponent>[] GetComponents(IFilter<Dictionary<Type, IObjectComponent>, IObjectComponent> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPointer<C> CreateComponent<C>(params Action<C>[] genFns) where C : class, IObjectComponent
+        {
+            throw new NotImplementedException();
         }
     }
 }
